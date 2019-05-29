@@ -19,11 +19,15 @@ import idu.cs.exception.ResourceNotFoundException;
 import idu.cs.repository.UserRepository;
 
 @Controller
-public class HomeController {
+public class UserController {
 	@Autowired UserRepository userRepo; // Dependency Injection
 	@GetMapping("/")
 	public String home(Model model) { 
 		return "index";
+	}
+	@GetMapping("/user-login")
+	public String getLoginForm(Model model) {
+		return "login";
 	}
 	@GetMapping("/user-reg-form")
 	public String getRegForm(Model model) {
