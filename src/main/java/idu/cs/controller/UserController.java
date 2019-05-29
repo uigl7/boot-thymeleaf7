@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import idu.cs.domain.User;
 import idu.cs.exception.ResourceNotFoundException;
 import idu.cs.repository.UserRepository;
 
-@Controller
+@Controller // @Component, @Service, @Repository
+// Spring Framework에게 이 클래스로 부터 작성된 객체는 Controller 역할을 함을 알려줌
+// Spring 이 이 클래스로 부터 Bean 객체를 생성해서 등록할 수 있음
 public class UserController {
 	@Autowired UserRepository userRepo; // Dependency Injection
 	@GetMapping("/")
@@ -45,6 +46,13 @@ public class UserController {
 		session.setAttribute("user", sessionUser);
 		return "redirect:/";
 	}
+	@GetMapping("/logout")
+	public String logoutUser(HttpSession session) {
+		session.removeAttribute("user");
+		// session.invalidate();
+		return "redirect:/";
+	}
+	
 	@GetMapping("/user-register-form")
 	public String getRegForm(Model model) {
 		return "register";
